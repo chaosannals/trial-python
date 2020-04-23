@@ -1,10 +1,12 @@
 import os
+import re
 
 
-def list_file(folder, deep=False):
+def list_file(folder, deep=False, nsort=False):
     '''
     列举目录下的文件
     '''
+
     result = []
     dirname = os.path.abspath(folder)
     for i in os.listdir(dirname):
@@ -14,6 +16,8 @@ def list_file(folder, deep=False):
                 result.extend(list_file(path))
         else:
             result.append(path)
+    if nsort:
+        sorted(result, key=lambda p: re.sub(r'\d+', lambda m: '{:010}'.format(int(m.group())), p))
     return result
 
 
