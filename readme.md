@@ -13,3 +13,22 @@ pip install -r requirements.txt
 ```sh
 pyinstaller -F main/mkpw.py
 ```
+
+### 图片重设大小
+
+```sh
+pyinstaller -F main/imgrsz.py
+```
+
+### 图片切割
+
+```sh
+pyinstaller -F main/imgcut.py
+```
+
+### 图片重命名
+
+```sh
+pyinstaller -F main/imgrnm.py
+```
+
