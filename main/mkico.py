@@ -17,7 +17,7 @@ op.add_option('-t', '--target',
 
 for path in args:
     im = Image.open(path)
-    im.save(options.target, 'ico')
+    im.save(options.target, 'ico', sizes=[(256,256), (400,400)])
 else:
     Image.init()
     print(Image.SAVE.keys())
