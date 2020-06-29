@@ -32,3 +32,8 @@ pyinstaller -F main/imgcut.py
 pyinstaller -F main/imgrnm.py
 ```
 
+### 生成 ICO
+
+```sh
+pyinstaller -F main/mkico.py
+```
