@@ -10,15 +10,20 @@ class TcpServer:
         self.selector = selectors.DefaultSelector()
 
         def read(conn, mask):
-            data = conn.recv(1000)
-            if data:
-                conn.send(data)
-            else:
+            try:
+                data = conn.recv(1000)
+                if data:
+                    conn.send(data)
+                else:
+                    self.selector.unregister(conn)
+                    conn.close()
+            except BaseException as e:
                 self.selector.unregister(conn)
                 conn.close()
+                print(e)
 
         def accept(sock, mask):
-            conn, addr = sock.accpet()
+            conn, addr = sock.accept()
             conn.setblocking(False)
             self.selector.register(conn, selectors.EVENT_READ, read)
 

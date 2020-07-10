@@ -18,7 +18,7 @@ class TcpServer(asyncore.dispatcher):
     def handle_accepted(self, sock, addr):
         TcpHandler(sock)
 
-server = TcpServer('localhost', 8080)
+server = TcpServer('localhost', 8000)
 
 # 全局的，定义的类，继承分发器构造时自动注册。
 asyncore.loop()
