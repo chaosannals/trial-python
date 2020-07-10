@@ -1,5 +1,6 @@
 import selectors
 import socket
+import struct
 
 class TcpServer:
     def __init__(self, host, port):
@@ -13,7 +14,10 @@ class TcpServer:
             try:
                 data = conn.recv(1000)
                 if data:
-                    conn.send(data)
+                    r = struct.unpack('>HIH', data)
+                    print("{}".format(r))
+                    p = struct.pack('>HIH', r[2], r[1], r[0])
+                    conn.send(p)
                 else:
                     self.selector.unregister(conn)
                     conn.close()
