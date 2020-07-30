@@ -11,29 +11,29 @@ pip install -r requirements.txt
 ### 密码随机生成
 
 ```sh
-pyinstaller -F main/mkpw.py
+pyinstaller -F tool/mkpw.py
 ```
 
 ### 图片重设大小
 
 ```sh
-pyinstaller -F main/imgrsz.py
+pyinstaller -F tool/imgrsz.py
 ```
 
 ### 图片切割
 
 ```sh
-pyinstaller -F main/imgcut.py
+pyinstaller -F tool/imgcut.py
 ```
 
 ### 图片重命名
 
 ```sh
-pyinstaller -F main/imgrnm.py
+pyinstaller -F tool/imgrnm.py
 ```
 
 ### 生成 ICO
 
 ```sh
-pyinstaller -F main/mkico.py
+pyinstaller -F tool/mkico.py
 ```
