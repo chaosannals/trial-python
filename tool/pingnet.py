@@ -1,6 +1,13 @@
 from ipaddress import ip_address, ip_network
-from icmplib import ping
+from icmplib import multiping
+from time import time
 
-for ip in ip_network('192.168.0.0/24'):
-    r = ping(str(ip), interval=0.2)
-    print('{} => {}'.format(ip, r.is_alive))
+ips = [str(ip) for ip in ip_network('192.168.0.0/24')]
+
+start = time()
+result = multiping(ips)
+end = time()
+
+for r in result:
+   print('{} => {}'.format(r.address, r.is_alive))
+print('{}s'.format(end - start))
