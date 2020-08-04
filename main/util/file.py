@@ -8,9 +8,9 @@ def list_file(folder, deep=False, nsort=False):
     '''
 
     result = []
-    dirname = os.path.abspath(folder)
+    dirname = os.path.realpath(folder)
     for i in os.listdir(dirname):
-        path = os.path.abspath(dirname + '/' + i)
+        path = os.path.realpath(dirname + '/' + i)
         if os.path.isdir(path):
             if deep:
                 result.extend(list_file(path))

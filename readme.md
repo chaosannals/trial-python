@@ -37,3 +37,9 @@ pyinstaller -F tool/imgrnm.py
 ```sh
 pyinstaller -F tool/mkico.py
 ```
+
+### Qt5 Ui 文件编译
+
+```sh
+pyinstaller -F tool/qt5uic.py
+```
