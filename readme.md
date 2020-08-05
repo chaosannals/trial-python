@@ -43,3 +43,9 @@ pyinstaller -F tool/mkico.py
 ```sh
 pyinstaller -F tool/qt5uic.py
 ```
+
+### 腾讯地图行政区划
+
+```sh
+pyinstaller -F -w pick/txm/txmp.py
+```
