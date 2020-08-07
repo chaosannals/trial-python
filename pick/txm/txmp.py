@@ -55,8 +55,8 @@ class MainWindow(qtw.QMainWindow):
         self.ui.pickButton.clicked.connect(self.pick)
 
     def pick(self):
-        key = self.ui.keyTextEdit.toPlainText()
-        secret = self.ui.secretTextEdit.toPlainText()
+        key = self.ui.keyLineEdit.toPlainText()
+        secret = self.ui.secretLineEdit.toPlainText()
         picker = Picker(key, secret)
         district = picker.pick_district()
         for d1 in district[0]:

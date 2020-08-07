@@ -13,25 +13,26 @@
   <property name="windowTitle">
    <string>腾讯地图行政划区</string>
   </property>
+  <property name="styleSheet">
+   <string notr="true">background: #fff;</string>
+  </property>
   <widget class="QWidget" name="centralwidget">
    <layout class="QVBoxLayout" name="verticalLayout">
     <item>
-     <widget class="QPlainTextEdit" name="keyTextEdit">
-      <property name="maximumSize">
-       <size>
-        <width>16777215</width>
-        <height>28</height>
-       </size>
+     <widget class="QLineEdit" name="keyLineEdit">
+      <property name="styleSheet">
+       <string notr="true">font-size: 18px;
+border: 1px solid #333;
+border-radius: 5px;</string>
       </property>
      </widget>
     </item>
     <item>
-     <widget class="QPlainTextEdit" name="secretTextEdit">
-      <property name="maximumSize">
-       <size>
-        <width>16777215</width>
-        <height>28</height>
-       </size>
+     <widget class="QLineEdit" name="secretLineEdit">
+      <property name="styleSheet">
+       <string notr="true">font-size: 18px;
+border: 1px solid #333;
+border-radius: 5px;</string>
       </property>
      </widget>
     </item>
@@ -50,6 +51,16 @@
     </item>
     <item>
      <widget class="QPushButton" name="pickButton">
+      <property name="styleSheet">
+       <string notr="true">padding: 10px;
+border-radius: 5px;
+color: #fff;
+background:rgb(0, 170, 255);
+
+QPushButton::hover {
+	background:rgb(0, 200, 255);
+}</string>
+      </property>
       <property name="text">
        <string>获取</string>
       </property>
