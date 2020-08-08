@@ -1,5 +1,15 @@
 # [trial-python](https://github.com/chaosannals/trial-python)
 
+## Pypy
+
+pypy 的命令基本和 pip 相同。
+
+```bash
+./pypy3 -m venv .pypyve
+./pypy3 -m ensurepip
+./pypy3 -m pip list
+```
+
 ## 安装
 
 ```bash
