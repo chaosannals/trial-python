@@ -10,6 +10,18 @@ pypy 的命令基本和 pip 相同。
 ./pypy3 -m pip list
 ```
 
+## PyQt5
+
+安装 pyqt5 会带有命令行工具：
+
+```bash
+# 生成 UI 文件
+pyuic5 -o output.py input.ui
+
+# 生成资源文件
+pyrcc5 -o output.py input.qrc
+```
+
 ## 安装
 
 ```bash

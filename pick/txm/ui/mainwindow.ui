@@ -13,9 +13,6 @@
   <property name="windowTitle">
    <string>腾讯地图行政划区</string>
   </property>
-  <property name="styleSheet">
-   <string notr="true">background: #fff;</string>
-  </property>
   <widget class="QWidget" name="centralwidget">
    <layout class="QVBoxLayout" name="verticalLayout">
     <item>
