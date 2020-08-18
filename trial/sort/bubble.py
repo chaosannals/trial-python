@@ -132,12 +132,3 @@ def cocktail_sort(source):
         if final:
             break
     return target
-
-
-source = [3, 2, 1, 5, 8, 6, 3, 9, 7, 8, 9, 10, 11, 12, 3]
-print(source)
-print(bubble_sort_2(source))
-print(bubble_sort_1(source))
-print(bubble_sort(source))
-print(cocktail_sort_1(source))
-print(cocktail_sort(source))
