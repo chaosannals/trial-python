@@ -71,3 +71,13 @@ pyinstaller -F tool/qt5uic.py
 ```sh
 pyinstaller -F -w pick/txm/txmp.py
 ```
+
+## 测试
+
+```bash
+# 所有测试
+python -m unittest discover test -p *.py
+
+# 指定测试
+python -m unittest test.index
+```
