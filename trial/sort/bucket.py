@@ -4,7 +4,7 @@ import math
 def bucket_sort(source):
     '''
     桶排序
-    平均时间复杂度：O（n + m + n(logn - logm))
+    平均时间复杂度：O(n + m + n(logn - logm))
     '''
     # 取最大最小值
     mi = source[0]
@@ -41,7 +41,3 @@ def bucket_sort(source):
             index += 1
     return target
 
-
-source = [3, 2, 1, 5, 8, 6, 3, 9, 7, 8, 9, 10, 11, 12, 3]
-print(source)
-print(bucket_sort(source))
