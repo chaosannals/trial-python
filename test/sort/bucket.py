@@ -2,7 +2,7 @@ from unittest import IsolatedAsyncioTestCase, skip
 from trial.sort import bucket
 from trial.index import random_list
 
-class BubbleTest(IsolatedAsyncioTestCase):
+class BucketTest(IsolatedAsyncioTestCase):
     '''
     '''
 
