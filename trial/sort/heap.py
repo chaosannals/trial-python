@@ -36,8 +36,3 @@ def heap_sort(source):
         target[0] = tmp
         heap_sort_down(target, 0, i)
     return target
-
-
-source = [3, 2, 1, 5, 8, 6, 3, 9, 7, 8, 9, 10, 11, 12, 3, 17, 13, 15]
-print(source)
-print(heap_sort(source))
