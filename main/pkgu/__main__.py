@@ -12,3 +12,5 @@ def show_pkg(pkg):
 
 
 show_pkg(p)
+
+print(p.__loader__.is_package(p.__name__))
