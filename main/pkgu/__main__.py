@@ -10,7 +10,15 @@ def show_pkg(pkg):
         if ispkg:
             show_pkg(m)
 
+def show_mod(mod):
+    loader = mod.__loader__
+    print(mod)
+    if loader.is_package(mod.__name__):
+        for _, n, _ in pkgutil.iter_modules(mod.__path__):
+            fn = mod.__name__ + '.' + n
+            m = importlib.import_module(fn)
+            show_mod(m)
 
 show_pkg(p)
-
-print(p.__loader__.is_package(p.__name__))
+print('-------------------------')
+show_mod(p)
