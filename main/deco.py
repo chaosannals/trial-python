@@ -35,6 +35,13 @@ def tt_3(func):
         return func(*args, **kwargs)
     return wrapper
 
+def dd_1(name):
+    class deco1:
+        def __init__(self, func):
+            self.func = func
+        def __get__(self, instance, cls):
+            return self.func
+
 @tt_3
 @tt_1('aaaa')
 @tt_2('bbb')
