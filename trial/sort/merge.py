@@ -50,8 +50,3 @@ def merge_sort(source):
     target = source[:]
     merge_sort_reduce(target, 0, len(target) - 1)
     return target
-
-
-source = [3, 2, 1, 5, 8, 6, 3, 9, 7, 8, 9, 10, 11, 12, 3, 17, 13, 15]
-print(source)
-print(merge_sort(source))
