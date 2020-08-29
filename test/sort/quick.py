@@ -1,8 +1,8 @@
 from unittest import IsolatedAsyncioTestCase, skip
-from trial.sort import merge
+from trial.sort import quick
 from trial.index import random_list
 
-class MergeTest(IsolatedAsyncioTestCase):
+class QuickTest(IsolatedAsyncioTestCase):
     '''
     '''
 
@@ -14,7 +14,10 @@ class MergeTest(IsolatedAsyncioTestCase):
     def setUp(self):
         self.s = random_list(1000)
 
-    async def test_merge_sort(self):
-        r = merge.merge_sort(self.s)
+    async def test_quick_sort(self):
+        r = quick.quick_sort(self.s)
         await self.assert_sort(r)
-        
+
+    async def test_quick_sort_1(self):
+        r = quick.quick_sort_1(self.s)
+        await self.assert_sort(r)
