@@ -15,7 +15,3 @@ def selection_sort(source):
         target[minIndex] = tmp
     return target
 
-
-source = [3, 2, 1, 5, 8, 6, 3, 9, 7, 8, 9, 10, 11, 12, 3]
-print(source)
-print(selection_sort(source))
