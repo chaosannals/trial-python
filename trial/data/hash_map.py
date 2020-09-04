@@ -59,17 +59,3 @@ class IntHashMap:
         else:
             self.data[index] = [buffer]
             self.data[index].append((key, value))
-
-hm = IntHashMap()
-hm.put(3, 'aaaa')
-hm.put(12, 'bbbb')
-hm.put(35, 'cccc')
-print(hm.data)
-print(hm.get(3))
-print(hm.get(12))
-print(hm.get(35))
-hm.resize(6)
-print(hm.data)
-print(hm.get(3))
-print(hm.get(12))
-print(hm.get(35))
