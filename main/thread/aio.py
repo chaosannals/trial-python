@@ -32,6 +32,7 @@ def run_fore():
     主线程，没有异步循环。
     '''
     thread = threading.Thread(target=run_back)
+    thread.setDaemon(True)
     thread.start()
     while True:
         text = input('place input:\n')
