@@ -1,13 +1,15 @@
+import re
 import time
 import asyncio
 import threading
 
+loop_able = True
 
-async def run_back_loop():
+async def run_back_loop(loop):
     '''
     次线程异步循环操作。
     '''
-    while True:
+    while loop_able:
         await asyncio.sleep(2)
         t = threading.current_thread()
         print('run_back_loop {}'.format(t))
@@ -15,25 +17,30 @@ async def run_back_loop():
 
 def run_back():
     '''
-    次线程。
+    次线程，用于异步处理。
     '''
+
     print('run_back')
     loop = asyncio.new_event_loop()
     asyncio.set_event_loop(loop)
-    asyncio.run_coroutine_threadsafe(run_back_loop(), loop)
-    loop.run_forever()
+    loop.run_until_complete(run_back_loop(loop))
+    loop.close()
 
 
 def run_fore():
     '''
-    主线程。
+    主线程，没有异步循环。
     '''
     thread = threading.Thread(target=run_back)
     thread.start()
     while True:
-        time.sleep(3)
+        text = input('place input:\n')
         t = threading.current_thread()
         print('run_fore {}'.format(t))
+        if text.find('exit') >= 0:
+            global loop_able
+            loop_able = False
+            break
 
 
 if __name__ == '__main__':
