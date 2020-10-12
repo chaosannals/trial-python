@@ -60,6 +60,12 @@ pyinstaller -F tool/imgrnm.py
 pyinstaller -F tool/mkico.py
 ```
 
+### Git 目录下项目拉取
+
+```sh
+pyinstaller -F tool/gitautopull.py
+```
+
 ### Qt5 Ui 文件编译
 
 ```sh
