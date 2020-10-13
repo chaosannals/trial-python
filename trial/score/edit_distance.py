@@ -37,8 +37,3 @@ def edit_distance(one, two):
                 m[i - 1][j - 1] + d
             )
     return m[len1][len2]
-
-r = edit_distance_r('hello', 'helio-world')
-r2 = edit_distance('hello', 'helio-world')
-print(r)
-print(r2)
