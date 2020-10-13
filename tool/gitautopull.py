@@ -17,3 +17,4 @@ def pull_default(folder=None):
     os.chdir(cwd)
 
 pull_default()
+input('按回车结束')
