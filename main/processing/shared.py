@@ -1,5 +1,6 @@
 import time
 import multiprocessing
+from multiprocessing.managers import SharedMemoryManager
 from multiprocessing.shared_memory import SharedMemory, ShareableList
 import numpy as np
 
