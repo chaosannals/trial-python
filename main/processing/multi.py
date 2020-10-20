@@ -33,6 +33,11 @@ def main():
     所以使用
     '''
 
+    # spawn 只会执行和 target 参数或者 run() 方法相关的代码。Windows 只能是这种模式。
+    # fork
+    # forserver，仅 unix 可用。
+    multiprocessing.set_start_method('spawn')
+
     for i in range(4):
         new_process(target=sum_1_to, args=(100000000, i))
 
