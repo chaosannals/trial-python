@@ -9,8 +9,8 @@ def sum_1_to(n, i):
     print('start: {}'.format(i))
     start = time.time()
     r = 0
-    for i in range(n):
-        r += i
+    for j in range(n):
+        r += j
     end = time.time()
     print('end {}: {}s'.format(i, end - start))
     return r
