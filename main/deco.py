@@ -53,3 +53,15 @@ tf()
 for n, f in data:
     # print(n)
     print(f.__name__)
+
+class ClassA:
+
+    @staticmethod
+    def func():
+        print('func')
+
+    def method(self):
+        self.func()
+
+a = ClassA()
+a.method()
