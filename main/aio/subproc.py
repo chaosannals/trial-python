@@ -1,3 +1,4 @@
+import sys
 import asyncio
 
 async def run(cmd):
@@ -12,6 +13,8 @@ async def run(cmd):
     stdout, stderr = await process.communicate()
 
     print(f'[{cmd!r} exited with {process.returncode}]')
+    coding = sys.getdefaultencoding()
+    print(f'coding: {coding}')
     if stdout:
         print(f'[stdout]\n{stdout.decode("gbk")}')
         pass
