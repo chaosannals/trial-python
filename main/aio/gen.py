@@ -4,6 +4,7 @@ def gen():
         print(f'g: {i} => {j}')
 
 g = gen()
+print(f's: {g.send(None)}') # send 之前没有 next 必须传 None。
 print(f'n1: {next(g)}')
 print(f'n2: {next(g)}')
 print(f's: {g.send(10)}') # send 可以给 yield 
