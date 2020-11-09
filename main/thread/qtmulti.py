@@ -4,6 +4,7 @@ from PyQt5.QtCore import *
 class QtMT(QThread):
     '''
     Qt 的多线程，都被 GIL 锁住了。
+    Qt 的锁得更严重，没有指令时间均分。
     '''
 
     def __init__(self, n, i):
