@@ -1,6 +1,8 @@
 from Crypto.Cipher import AES
 from Crypto.Random import get_random_bytes
 
+# pip install pycryptodome
+
 data = b'aaaaaaabbbbbbb'
 key = b'1234567890qwerty'
 cipher = AES.new(key, AES.MODE_EAX)
