@@ -1,6 +1,7 @@
 /.*/
 /build/
 /dist/
+/temp/
 __pycache__
 *.spec
 *.exe
