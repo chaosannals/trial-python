@@ -1,5 +1,5 @@
 # pycryptodome
 
 ```bash
-# pip install pycryptodome
+pip install pycryptodome
 ```
