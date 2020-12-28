@@ -25,6 +25,17 @@ def get_now(tz='PRC', fmt='%Y-%m-%d %H:%M:%S'):
     return dt.strftime(fmt)
 
 
+def dt2ts(text, fmt='%Y-%m-%d %H:%M:%S'):
+    '''
+    日期字符串转时间戳。
+    '''
+
+    if text == None:
+        return None
+    t = time.strptime(text, fmt)
+    return time.mktime(t)
+
+
 def reduce(vs, op='or'):
     '''
     批量 or 得结果
