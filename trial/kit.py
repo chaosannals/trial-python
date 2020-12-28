@@ -25,7 +25,19 @@ def get_now(tz='PRC', fmt='%Y-%m-%d %H:%M:%S'):
     return dt.strftime(fmt)
 
 
-def in_dict(d, ks):
+def reduce(vs, op='or'):
+    '''
+    批量 or 得结果
+    '''
+
+    if op == 'or':
+        return functools.reduce(lambda x, y: x or y, vs)
+    if op == 'and':
+        return functools.reduce(lambda x, y: x and y, vs)
+    raise Exception('不是有效的合并操作')
+
+
+def in_dict(d, ks, reop=None):
     '''
     批量判断是否在字典里。
     '''
@@ -34,20 +46,6 @@ def in_dict(d, ks):
     dks = d.keys()
     for k in ks:
         r.append(k in dks)
-    return r
-
-
-def batch_or(vs):
-    '''
-    批量 or 得结果
-    '''
-
-    return functools.reduce(lambda x, y: x or y, vs)
-
-
-def batch_and(vs):
-    '''
-    批量 and 得结果
-    '''
-
-    return functools.reduce(lambda x, y: x and y, vs)
+    if reop == None:
+        return r
+    return reduce(r, reop)
