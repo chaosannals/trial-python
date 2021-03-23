@@ -3,6 +3,7 @@ import asyncio
 
 async def run(cmd):
     '''
+    子处理 shell
     '''
 
     process = await asyncio.create_subprocess_shell(
@@ -22,4 +23,4 @@ async def run(cmd):
         print(f'[stderr]\n{stderr.decode("gbk")}')
         pass
 
-asyncio.run(run('ls'))
+asyncio.run(run('dir'))
