@@ -6,6 +6,7 @@ server = SSHTunnelForwarder(
     ssh_username="root", # ssh 用户
     ssh_password="password", # ssh 密码
     remote_bind_address=('0.0.0.0', 6379) # 远程绑定的地址及端口
+    #ssh_pkey='', # 私钥
 )
 
 server.start()
