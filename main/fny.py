@@ -7,6 +7,6 @@ try:
 except KeyboardInterrupt as e:
     print(f'k {e}')
 else: # 没有异常则继续的代码
-    print('unknow')
+    print('else code')
 finally:
     print('finally')
