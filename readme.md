@@ -78,6 +78,12 @@ pyinstaller -F tool/qt5uic.py
 pyinstaller -F -w pick/txm/txmp.py
 ```
 
+### 内网 IP ping
+
+```sh
+pyinstaller -F tool/pinginet.py
+```
+
 ## 测试
 
 ```bash
