@@ -3,17 +3,23 @@ import socket
 import struct
 import select
 import time
+import functools
+import sys
 from ipaddress import ip_network
+
+if sys.platform.startswith("win"):
+    if sys.version_info[0] > 3 or (sys.version_info[0] == 3 and sys.version_info[1] >= 8):
+        asyncio.set_event_loop_policy(asyncio.WindowsSelectorEventLoopPolicy())
 
 class Packer:
     '''
     '''
 
-    data_type = 8 # ICMP Echo Request
-    data_code = 0 # 必须为0
-    data_checksum = 0 #
-    data_id = 0 #
-    payload = b'0123456789AaBbCcDdEeFfGgHhIiJjKk' # 32字节的负载数据
+    data_type = 8  # ICMP Echo Request
+    data_code = 0  # 必须为0
+    data_checksum = 0
+    data_id = 0
+    payload = b'0123456789AaBbCcDdEeFfGgHhIiJjKk'  # 32字节的负载数据
 
     @classmethod
     def pack(cls, sequence):
@@ -57,6 +63,36 @@ class Packer:
         result = ~s & 0xffff
         return result >> 8 | (result << 8 & 0xff00)
 
+
+async def aio_sendto(loop, sock, packet, address):
+    '''
+    异步版 sendto
+    '''
+
+    future = loop.create_future()
+
+    def send(sock, packet, address, future):
+        try:
+            sock.sendto(packet, address)
+        except (BlockingIOError, InterruptedError):
+            return None
+        except Exception as exc:
+            future.set_exception(exc)
+        else:
+            future.set_result(None)
+        finally:
+            loop.remove_writer(sock)
+    callback = functools.partial(
+        send,
+        sock=sock,
+        packet=packet,
+        address=address,
+        future=future
+    )
+    loop.add_writer(sock, callback)
+    await future
+
+
 async def send(loop, packet, ip, sequence, timeout=2):
     '''
     '''
@@ -66,9 +102,11 @@ async def send(loop, packet, ip, sequence, timeout=2):
         socket.SOCK_RAW,
         socket.getprotobyname("icmp")
     )
+    sock.setblocking(False)
     start_time = time.time()
-    sock.sendto(packet, (ip, 80))
-    
+    await aio_sendto(loop, sock, packet, (ip, 0))
+    # sock.sendto(packet, (ip, 0))
+
     while True:
         start_select_time = time.time()
         what_ready = select.select([sock], [], [], timeout)
@@ -86,6 +124,7 @@ async def send(loop, packet, ip, sequence, timeout=2):
 
         if timeout <= wait_for_time:
             return -1
+
 
 async def ping(loop, ip):
     '''
