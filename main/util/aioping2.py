@@ -1,6 +1,7 @@
 import asyncio
 import aioping
 import math
+import time
 from ipaddress import ip_network
 
 
@@ -16,11 +17,12 @@ async def main(loop):
     '''
     '''
 
-    cc = 70
+    cc = 255
     ipn = list(ip_network('192.168.0.0/24'))[1:-1]
     ipc = math.ceil(len(ipn) / cc)
     ipg = [ipn[i * cc: (i + 1)* cc] for i in range(ipc)]
     result = []
+    start = time.time()
     for ips in ipg:
         tasks = []
         for ip in ips:
@@ -34,6 +36,8 @@ async def main(loop):
             if r: 
                 result.append(ip)
     result.sort()
+    end = time.time()
+    print(f'time: {end - start}s')
     for ip in result:
         print(ip)
  
