@@ -2,6 +2,7 @@ import asyncio
 import aioping
 import math
 import time
+import socket
 from ipaddress import ip_network
 
 
@@ -26,7 +27,6 @@ async def main(loop):
     for ips in ipg:
         tasks = []
         for ip in ips:
-            print(f'ping {ip}')
             task = ping(f'{ip}')
             tasks.append(task)
         dones, pendings = await asyncio.wait(tasks)
@@ -35,7 +35,9 @@ async def main(loop):
             ip, r, _ = d.result()
             if r: 
                 result.append(ip)
-    result.sort()
+    def sort_ip(ip):
+        return socket.inet_aton(ip)
+    result.sort(key=sort_ip)
     end = time.time()
     print(f'time: {end - start}s')
     for ip in result:
