@@ -21,3 +21,20 @@ python setupcui.py bdist_msi
 # 图形化
 python setupgui.py bdist_msi
 ```
+
+```bash
+# 服务
+python setupwinsvc.py bdist_msi
+
+# 在安装目录下运行 安装
+winsvc.exe install
+
+# 开始
+winsvc.exe start
+
+# 停止
+winsvc.exe stop
+
+# 卸载
+winsvc.exe remove
+```
