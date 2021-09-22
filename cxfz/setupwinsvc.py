@@ -12,6 +12,9 @@ setup(
     description = "My Service application!",
     options = {
         "build_exe": build_exe_options,
+        'bdist_msi': {
+            'all_users': True,
+        }
     },
     executables = [
         Executable(

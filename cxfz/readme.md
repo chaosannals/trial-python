@@ -38,3 +38,5 @@ winsvc.exe stop
 # 卸载
 winsvc.exe remove
 ```
+
+注：目前服务无法正常启动。等 pywin32 的下个版本再试试。
