@@ -2,6 +2,7 @@ from genericpath import isdir
 import os
 import httpx
 from urllib.parse import urlparse
+from loguru import logger
 from bs4 import BeautifulSoup
 from conf import CONF
 
@@ -75,7 +76,12 @@ class GitHubClient:
             result.append(r)
         return result
 
-if '__main__' == __name__:
+@logger.catch
+def main():
+    '''
+    
+    '''
+
     ghc = GitHubClient(**CONF)
     infos = ghc.get_repositories_info_all()
     for info in infos:
@@ -84,19 +90,22 @@ if '__main__' == __name__:
         if os.path.isdir(pd):
             pg = os.path.join(pd, '.git')
             if os.path.isdir(pg):
-                print(f'[{pn}]------------------------------------------------[start]')
+                logger.info(f'[{pn}]------------------------------------------------[start]')
                 os.chdir(pd)
                 os.system('git pull')
-                print(f'[{pn}]------------------------------------------------[end]')
+                logger.info(f'[{pn}]------------------------------------------------[end]')
                 continue
         # 克隆
         td = info['target_dir']
         go = info['git_origin']
         if not os.path.isdir(td):
             os.makedirs(td)
-        print(f'<clone>[{pn}]------------------------------------------------[start]')
+        logger.info(f'<clone>[{pn}]------------------------------------------------[start]')
         os.chdir(td)
         os.system(f'git clone {go}')
-        print(f'<clone>[{pn}]------------------------------------------------[end]')
+        logger.info(f'<clone>[{pn}]------------------------------------------------[end]')
 
-input('按回车结束')
+    input('按回车结束')
+
+if '__main__' == __name__:
+    main()
