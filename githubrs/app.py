@@ -1,13 +1,24 @@
-from genericpath import isdir
 import os
-import re
-from chardet import detect
+import platform
 import httpx
+from chardet import detect
 from urllib.parse import urlparse
 from subprocess import check_output, CalledProcessError
 from loguru import logger
 from bs4 import BeautifulSoup
 from conf import CONF
+
+
+def get_run_encoding():
+    sn = platform.system()
+    if sn == 'Windows':
+        co = check_output(['cmd', '/c', 'echo', '中文命令行输出'])
+    elif sn == 'Linux':
+        co = check_output(['echo', '中文命令行输出'])
+    cd = detect(co)
+    e = cd['encoding']
+    # print(co.decode(e))
+    return e
 
 
 def run(cmd):
@@ -20,9 +31,12 @@ def run(cmd):
     except CalledProcessError as e:
         out_bytes = e.output
 
-    # TODO encoding = None
     cd = detect(out_bytes)
-    return out_bytes.decode(cd['encoding'])
+    ec = cd.get('encoding')
+    if ec is None:
+        ec = get_run_encoding()
+
+    return out_bytes.decode(ec)
 
 
 class GitHubClient:
@@ -107,13 +121,15 @@ class GitHubClient:
 
         '''
 
-        info = {
-            'project': pn,
-            'directory': pd,
-        }
+        
         os.chdir(pd)
         r = run(['git', 'pull'])
         logger.info(r)
+        info = {
+            'project': pn,
+            'directory': pd,
+            'output': r,
+        }
         if r.find('Already up to date') >= 0:
             self.pull_success.append(info)
         else:
@@ -124,17 +140,17 @@ class GitHubClient:
 
         '''
 
-        info = {
-            'target': td,
-            'project': pn,
-            'origin': go,
-        }
-
         if not os.path.isdir(td):
             os.makedirs(td)
         os.chdir(td)
         r = run(['git', 'clone', go])
         logger.info(r)
+        info = {
+            'target': td,
+            'project': pn,
+            'origin': go,
+            'output': r,
+        }
         self.clone_success.append(info)
 
 
@@ -146,26 +162,27 @@ def main():
 
     ghc = GitHubClient(**CONF)
     infos = ghc.get_repositories_info_all()
-    for info in infos:
+    ic = len(infos)
+    for i, info in enumerate(infos):
         pd = info['project_dir']
         pn = info['project']
         if os.path.isdir(pd):
             pg = os.path.join(pd, '.git')
             if os.path.isdir(pg):
                 logger.info(
-                    f'[{pn}]------------------------------------------------[start]')
+                    f'<>[{i}/{ic}]{pn}------------------------------------------------[start]')
                 ghc.pull_project(pn, pd)
                 logger.info(
-                    f'[{pn}]------------------------------------------------[end]')
+                    f'<>[{i}/{ic}]{pn}------------------------------------------------[end]')
                 continue
         # 克隆
         logger.info(
-            f'<clone>[{pn}]------------------------------------------------[start]')
+            f'<+>[{i}/{ic}]{pn}------------------------------------------------[start]')
         td = info['target_dir']
         go = info['git_origin']
         ghc.clone_project(td, pn, go)
         logger.info(
-            f'<clone>[{pn}]------------------------------------------------[end]')
+            f'<+>[{i}/{ic}]{pn}------------------------------------------------[end]')
 
     logger.warning('pull fail')
     for pf in ghc.pull_fail:

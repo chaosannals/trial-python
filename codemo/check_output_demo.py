@@ -11,6 +11,7 @@ def main():
     try:
         out_bytes = check_output(
             ['ping', '114.114.114.114'],
+            #['echo', '$LANG'],
         )
         code = 0
     except CalledProcessError as e:
