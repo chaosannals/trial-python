@@ -13,7 +13,7 @@ Kivy-Garden==0.1.5
 numpy==1.23.1
 opencv-python==4.6.0.66
 pefile==2022.5.30
-Pillow==9.2.0
+Pillow==9.3.0
 pycodestyle==2.8.0
 pyenchant==3.2.2
 Pygments==2.12.0
