@@ -31,6 +31,7 @@ class NumNeuralNetwork:
                 self.hidden_weight = np.array(data['hidden_weight'])
                 self.output_shape = data['output_shape']
                 self.output_weight = np.array(data['output_weight'])
+                self.learning_rate = data['learning_rate']
         else:
             self.input_shape = input_shape
             self.hidden_shape = hidden_shape
@@ -93,5 +94,6 @@ class NumNeuralNetwork:
                 'hidden_weight': self.hidden_weight.tolist(),
                 'output_shape': self.output_shape,
                 'output_weight': self.output_weight.tolist(),
+                'learning_rate': self.learning_rate
             }
             json.dump(data, writer)
