@@ -8,6 +8,7 @@ def main():
         10
     )
     data_set.ensure_data_set()
+    data_count = data_set.count()
 
     n = NumNeuralNetwork(
         input_shape=28 * 28,
@@ -15,11 +16,10 @@ def main():
         output_shape=10,
         learning_rate=0.0014,
     )
-    for i in range((int)(data_set.count() / 100)):
+    for i in range(10):
         print(f'epoch {i} start')
-        for j in range(100):
-            index = i * 100 + j
-            d = data_set.get_one(index)
+        for j in range(data_count):
+            d = data_set.get_one(j)
             r = n.train(d.image, d.label)
             #print(r)
         print(f'epoch {i} end: {r}')
