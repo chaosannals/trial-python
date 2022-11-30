@@ -1,0 +1,19 @@
+version: "3.8"
+
+services:
+  marqo-server:
+    image: marqoai/marqo:0.0.6
+    container_name: marqo
+    privileged: true
+    ports:
+      - 8882:8882
+    extra_hosts:
+      - host.docker.internal:host-gateway
+    networks:
+      - trial-marqo-net
+    
+networks:
+  trial-marqo-net:
+    name: trial-marqo-net
+    driver: bridge
+    
