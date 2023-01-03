@@ -2,7 +2,8 @@ version: "3.8"
 
 services:
   marqo-server:
-    image: marqoai/marqo:0.0.6
+    # 这东西装了就一直启动不了，好像是下载的东西被墙了。
+    image: marqoai/marqo:0.0.10
     container_name: marqo
     privileged: true
     ports:
