@@ -20,4 +20,9 @@ writer.add_document(
     path=u"/path/to/dddd",
     content=u"this first doc 带中文sfdsf信息",
 )
+
+# 提交修改
 writer.commit()
+
+# 取消修改
+# writer.cancel()
