@@ -1,4 +1,5 @@
 from whoosh.index import open_dir
+from whoosh.sorting import add_sortable, FieldFacet
 from whoosh.fields import TEXT, ID, DATETIME
 
 idx = open_dir("indexdir")
@@ -21,6 +22,9 @@ if not 'aaaa' in fields:
 #     writer.add_field('dyn_*', TEXT(stored=True), glob=True)
 # 移除动态字段必须和添加时命名一致
 # writer.remove_field('dyn_*')
+
+# 添加排序
+add_sortable(writer, "title", FieldFacet('title'))
 
 if not 'anthor' in fields:
     writer.add_field('anthor', TEXT(stored=True))
