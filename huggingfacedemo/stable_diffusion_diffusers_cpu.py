@@ -9,7 +9,7 @@ import torch
 #
 # huggingface 缓存默认目录： ~/.cache/huggingface
 #
-# 这个是 在线 diffusers 的预训练模型，需要下载配置代理。
+# 这个是 在线 diffusers 的预训练模型，需要下载配置代理，默认下载 5G 的版本。
 # name_or_path = "runwayml/stable-diffusion-v1-5"
 # 这个是 离线 CompVis/stable-diffusion 的预训练模型 10G。git@hf.co:CompVis/stable-diffusion-v1-4
 name_or_path = "F:/.github/stable-diffusion-v1-4"
