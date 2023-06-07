@@ -19,8 +19,11 @@ pipeline = DiffusionPipeline.from_pretrained(
     name_or_path,
     # torch_dtype=torch.float16, # cpu 没有 half float16
     torch_dtype=torch.float32, 
-    # 被墙，下载预训练模型要梯子
-    proxies={'https://': 'http://127.0.0.1:10809'},
+    local_files_only = True, # 只使用本地文件
+
+    # 在线版，被墙，下载预训练模型要梯子
+    # proxies={'https://': 'http://127.0.0.1:10809'},
+    # pip install requests[socks]
     # proxies= {'https': 'socks5h://192.168.0.200:10080'},
 )
 
@@ -31,12 +34,12 @@ pipeline = DiffusionPipeline.from_pretrained(
 del pipeline.vae.encoder
 
 # 提示词
-prompt = "麻婆豆腐"
+prompt = "Lunatic Dawn"
 #
 self_dir = os.path.dirname(__file__)
 now = time_ns()
 print(f'here: {self_dir}')
-for i in range(2):
+for i in range(10):
     out_path = f"{self_dir}/.out/{now}/{i}.png"
     out_dir = os.path.dirname(out_path)
     if not os.path.isdir(out_dir):
