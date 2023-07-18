@@ -1,0 +1,8 @@
+/*.build/
+/*.dist/
+/*.onefile-build/
+*.exe
+*.cmd
+*.pyd
+*.pyi
+
