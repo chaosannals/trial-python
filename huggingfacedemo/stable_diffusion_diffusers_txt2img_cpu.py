@@ -35,16 +35,33 @@ pipeline = DiffusionPipeline.from_pretrained(
 del pipeline.vae.encoder
 
 # 提示词
-prompt = "侠客游"
+# prompt = "icon sword fire burning ice"
+# prompt = "chaos night star nebula  burning torch dragon"
+
+# prompt = "icon sword setting torch burning"
+# prompt = 'tavern people traveler torch beer'
+# prompt = 'tavern people traveler torch'
+# prompt = 'traveler beer medieval tavern'
+# prompt = 'traveler medieval piazza plaza'
+# prompt = 'traveler medieval village'
+# prompt = 'overlook travelers ancient chinese village'
+# prompt = 'overlook travelers ancient chinese city'
+# prompt = 'aerial photography ancient chinese city'
+# prompt = 'ancient chinese boy meditation smoky'
+prompt = '3d cartoon ancient chinese boy meditation with nebula'
+
 #
 self_dir = os.path.dirname(__file__)
 now = time_ns()
 print(f'here: {self_dir}')
 for i in range(10):
+    out_result = pipeline(prompt)
+    out_count = len(out_result.images)
     out_path = f"{self_dir}/.out/{now}/{i}.png"
     out_dir = os.path.dirname(out_path)
     if not os.path.isdir(out_dir):
         print(f'makedirs: {out_dir}')
         os.makedirs(out_dir, exist_ok=True)
-    image = pipeline(prompt).images[0]  
+    print(f'out count: {out_count}')
+    image = out_result.images[0]  
     image.save(out_path)

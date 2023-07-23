@@ -1,6 +1,7 @@
 from pathlib import Path
 from lambda_diffusers import StableDiffusionImageEmbedPipeline
 from PIL import Image
+from time import time_ns
 import os
 import torch
 
@@ -27,12 +28,14 @@ pipe = StableDiffusionImageEmbedPipeline.from_pretrained(
 )
 pipe = pipe.to(device)
 
-im = Image.open(f"{self_dir}/stable_diffusion_image_variations_diffusers_img2img.png")
+# im = Image.open(f"{self_dir}/stable_diffusion_image_variations_diffusers_img2img.png")
+im = Image.open(f"{self_dir}/.out/1686932017209738100/6.png")
 num_samples = 4
 image = pipe(num_samples*[im], guidance_scale=3.0)
 image = image["sample"]
 
-base_path = Path(f"{self_dir}/.out/im2im")
+now = time_ns()
+base_path = Path(f"{self_dir}/.out/im2im/{now}")
 base_path.mkdir(exist_ok=True, parents=True)
 for idx, im in enumerate(image):
     im.save(f"{base_path}/{idx:06}.jpg")
