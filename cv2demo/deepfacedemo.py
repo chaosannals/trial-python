@@ -1,1 +1,1 @@
-# pip install deepface
+# pip install -i https://mirrors.aliyun.com/pypi/simple/ deepface
