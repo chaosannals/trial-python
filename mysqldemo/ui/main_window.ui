@@ -17,8 +17,11 @@
    <layout class="QVBoxLayout" name="verticalLayout">
     <item>
      <widget class="QStackedWidget" name="routeWidget">
-      <widget class="UserGrantPage" name="userGrantPage"/>
+      <property name="currentIndex">
+       <number>0</number>
+      </property>
       <widget class="IndexPage" name="indexPage"/>
+      <widget class="UserGrantPage" name="userGrantPage"/>
      </widget>
     </item>
    </layout>
@@ -37,15 +40,15 @@
  </widget>
  <customwidgets>
   <customwidget>
-   <class>UserGrantPage</class>
-   <extends>QWidget</extends>
-   <header>ui.page.user_grant_page</header>
-   <container>1</container>
-  </customwidget>
-  <customwidget>
    <class>IndexPage</class>
    <extends>QWidget</extends>
    <header>ui.page.index_page</header>
+   <container>1</container>
+  </customwidget>
+  <customwidget>
+   <class>UserGrantPage</class>
+   <extends>QWidget</extends>
+   <header>ui.page.user.user_grant_page</header>
    <container>1</container>
   </customwidget>
  </customwidgets>

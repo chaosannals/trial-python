@@ -40,7 +40,18 @@
         </layout>
        </item>
        <item>
-        <widget class="QTableView" name="userTable"/>
+        <widget class="QTableWidget" name="userTable">
+         <column>
+          <property name="text">
+           <string>#</string>
+          </property>
+         </column>
+         <column>
+          <property name="text">
+           <string>用户名</string>
+          </property>
+         </column>
+        </widget>
        </item>
       </layout>
      </item>
