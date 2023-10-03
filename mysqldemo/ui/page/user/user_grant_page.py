@@ -8,4 +8,15 @@ class UserGrantPage(QWidget):
         self.ui = Ui_UserGrantPage()
         self.ui.setupUi(self)
 
-        
+    
+    def insertUserRow():
+        '''
+        '''
+
+    def insertDbRow():
+        '''
+        '''
+
+    def insertIpRow():
+        '''
+        '''

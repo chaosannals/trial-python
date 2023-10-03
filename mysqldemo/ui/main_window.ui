@@ -18,7 +18,7 @@
     <item>
      <widget class="QStackedWidget" name="routeWidget">
       <widget class="UserGrantPage" name="userGrantPage"/>
-      <widget class="QWidget" name="page_2"/>
+      <widget class="IndexPage" name="indexPage"/>
      </widget>
     </item>
    </layout>
@@ -40,6 +40,12 @@
    <class>UserGrantPage</class>
    <extends>QWidget</extends>
    <header>ui.page.user_grant_page</header>
+   <container>1</container>
+  </customwidget>
+  <customwidget>
+   <class>IndexPage</class>
+   <extends>QWidget</extends>
+   <header>ui.page.index_page</header>
    <container>1</container>
   </customwidget>
  </customwidgets>
