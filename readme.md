@@ -30,3 +30,9 @@ twine upload dist/*
 # 打包 msi
 python setup.py bdist_msi
 ```
+
+## PySide6 
+
+提升头文件写法，头文件: 
+c++ 是头文件路径 ui/widget/your_widget.h
+python 是模块名， ui.widget.your_widget

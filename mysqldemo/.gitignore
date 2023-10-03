@@ -1,1 +1,4 @@
+__pycache__
+/log/
 /config.py
+*_ui.py
