@@ -1,3 +1,5 @@
 *.jpg
 *.pdf
+*.png
+*.out.gif
 *config.py
