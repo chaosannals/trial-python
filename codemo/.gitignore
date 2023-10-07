@@ -3,3 +3,4 @@
 *.png
 *.out.gif
 *config.py
+!center.png
