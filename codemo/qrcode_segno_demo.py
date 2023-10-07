@@ -30,6 +30,7 @@ qrcode.save(
 # gif 图
 here = os.path.dirname(__file__)
 
+# to_artistic 由 qrcode-artistic 库扩展提供。
 qrcode.to_artistic(
     background=os.path.join(here, 'bg.gif'),
     target='bg.out.gif',
