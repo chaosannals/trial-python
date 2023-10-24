@@ -6,6 +6,7 @@ from abc import ABC, abstractmethod
 from cmd import Cmd
 from sys import platform
 from time import sleep
+import os
 import socket
 import threading
 import paramiko
@@ -153,10 +154,13 @@ class SshServer(ServerBase):
             print(f"error: {e}")
 
 if __name__ == '__main__':
-    server = SshServer('C:/Users/UUUU/.ssh/id_rsa')
+    home_dir = os.path.expanduser('~')
+    host_key_path = os.path.join(home_dir, '.ssh', 'id_rsa')
+    print(f'home: {home_dir}')
+    print(f'host key: {host_key_path}')
+    server = SshServer(host_key_path)
     server.start()
 
-    
     try:
         while True:
             sleep(1000)
