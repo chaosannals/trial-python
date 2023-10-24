@@ -119,6 +119,10 @@ class SshServerInterface(paramiko.ServerInterface):
             return paramiko.AUTH_SUCCESSFUL
         return paramiko.AUTH_FAILED
     
+    def check_channel_shell_request(self, channel):
+        print("check_channel_shell_request")
+        return True
+    
     def check_auth_interactive(self, username, submethods):
         print(f"check_auth_interactive {username} {submethods}")
         return paramiko.InteractiveQuery()
