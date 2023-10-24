@@ -9,7 +9,6 @@ from time import sleep
 import os
 import socket
 import threading
-import multiprocessing
 import paramiko
 
 
@@ -89,7 +88,6 @@ class ServerBase(ABC):
             try:
                 self._socket.listen()
                 client, addr = self._socket.accept()
-                #print('.')
                 self.connection_function(client)
             except socket.timeout:
                 # print('.', end='', flush=True)
@@ -120,6 +118,19 @@ class SshServerInterface(paramiko.ServerInterface):
         if (username == "root") and (password == "123456"):
             return paramiko.AUTH_SUCCESSFUL
         return paramiko.AUTH_FAILED
+    
+    def check_auth_interactive(self, username, submethods):
+        print(f"check_auth_interactive {username} {submethods}")
+        return paramiko.InteractiveQuery()
+        # return paramiko.AUTH_FAILED
+    
+    def check_auth_interactive_response(self, responses):
+        print(f"check_auth_interactive_response {responses}")
+        return paramiko.InteractiveQuery()
+        # return paramiko.AUTH_FAILED
+    
+    def get_allowed_auths(self, username):
+        return "password"
 
     def get_banner(self):
         return ('My SSH Server\r\n', 'zh-CN')
@@ -129,7 +140,6 @@ def thread_work(client, host_key):
     try:
         print(f"connection_function")
         session = paramiko.Transport(client)
-        # session.add_server_key(self._host_key)
         session.add_server_key(host_key)
 
         server = SshServerInterface()
@@ -139,12 +149,8 @@ def thread_work(client, host_key):
             print(f"paramiko.SSHException {e}")
             return
 
-        # print('session.accept')
         channel = session.accept()
         stdio = channel.makefile('rwU')
-
-        # self.client_shell = Shell(stdio, stdio)
-        # self.client_shell.cmdloop()
 
         client_shell = Shell(stdio, stdio)
         client_shell.cmdloop()
