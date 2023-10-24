@@ -1,5 +1,5 @@
 '''
-该示例不是很友好，不能多个连接，且客户端连接后不会回显输入。
+该示例不是很友好，客户端连接后不会回显输入。
 '''
 
 from abc import ABC, abstractmethod
@@ -9,6 +9,7 @@ from time import sleep
 import os
 import socket
 import threading
+import multiprocessing
 import paramiko
 
 
@@ -88,9 +89,10 @@ class ServerBase(ABC):
             try:
                 self._socket.listen()
                 client, addr = self._socket.accept()
+                #print('.')
                 self.connection_function(client)
             except socket.timeout:
-                print('.', end='', flush=True)
+                # print('.', end='', flush=True)
                 pass
 
     @abstractmethod
@@ -122,36 +124,46 @@ class SshServerInterface(paramiko.ServerInterface):
     def get_banner(self):
         return ('My SSH Server\r\n', 'zh-CN')
     
+
+def thread_work(client, host_key):
+    try:
+        print(f"connection_function")
+        session = paramiko.Transport(client)
+        # session.add_server_key(self._host_key)
+        session.add_server_key(host_key)
+
+        server = SshServerInterface()
+        try:
+            session.start_server(server=server)
+        except paramiko.SSHException as e:
+            print(f"paramiko.SSHException {e}")
+            return
+
+        # print('session.accept')
+        channel = session.accept()
+        stdio = channel.makefile('rwU')
+
+        # self.client_shell = Shell(stdio, stdio)
+        # self.client_shell.cmdloop()
+
+        client_shell = Shell(stdio, stdio)
+        client_shell.cmdloop()
+
+        print('cmdloop end')
+
+        session.close()
+    except Exception as e:
+        print(f"error: {e}")
+        pass
 class SshServer(ServerBase):
     def __init__(self, host_key_file, host_key_file_password=None):
         super(SshServer, self).__init__()
         self._host_key = paramiko.RSAKey.from_private_key_file(host_key_file, host_key_file_password)
 
     def connection_function(self, client):
-        try:
-            print(f"connection_function")
-            session = paramiko.Transport(client)
-            session.add_server_key(self._host_key)
-
-            server = SshServerInterface()
-            try:
-                session.start_server(server=server)
-            except paramiko.SSHException as e:
-                print(f"paramiko.SSHException {e}")
-                return
-
-            print('session.accept')
-            channel = session.accept()
-            stdio = channel.makefile('rwU')
-
-            self.client_shell = Shell(stdio, stdio)
-            self.client_shell.cmdloop()
-
-            print('cmdloop end')
-
-            session.close()
-        except Exception as e:
-            print(f"error: {e}")
+        t = threading.Thread(target=thread_work, daemon=True, args=(client, self._host_key))
+        t.start()
+        print('start thread')
 
 if __name__ == '__main__':
     home_dir = os.path.expanduser('~')
