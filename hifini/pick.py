@@ -1,8 +1,11 @@
+from collections import OrderedDict
 import re
 import os
 import asyncio
 import httpx
+import httpcore
 from bs4 import BeautifulSoup
+
 
 TITLE_PATTERN = re.compile(r"title\s*:\s*'(.+?)',")
 AUTHOR_PATTERN = re.compile(r"author\s*:\s*'(.+?)',")
@@ -11,35 +14,56 @@ MUSIC_KEY_PATTERN = re.compile(r"get_music.php\?key=(.+?)',")
 HERE = os.path.dirname(__file__)
 TARGET_DIR = os.path.join(HERE, 'download')
 
-client = httpx.AsyncClient(http1=False, http2=True)
+# TODO 302 重定向的 Location 取不到真的，被识别出来爬虫
+pool = httpcore.ConnectionPool(http2=True)
+context = httpx.create_ssl_context(
+    http2=True,
+)
+client = httpx.AsyncClient(
+    base_url='https://hifini.com',
+    http1=False,
+    http2=True,
+    verify=context,
+    # follow_redirects=True,
+)
 
 async def download_music(url, path):
     # TODO 302 重定向的 Location 取不到真的，被识别出来爬虫
-    r = await client.get(url,  follow_redirects=True, headers={
+    r = await client.get(url, headers={
+        # ':authority': 'hifini.com',
+        # ':method': 'GET',
+        # ':path': url,
+        # ':scheme': 'https',
         # 'Accept': '*/*',
         # 'Accept-Encoding': 'identity;q=1, *;q=0',
         # 'Accept-Language': 'zh-CN,zh;q=0.9',
         # 'Cookie': 'bbs_sid=1ue6tkookhh4gro86arohub5ha; Hm_lvt_4ab5ca5f7f036f4a4747f1836fffe6f2=1699789699; 8f83abd858ac91be10a382e2393459d2=562d9a18f1b7506b26a1abd8bf63ac64; Hm_lpvt_4ab5ca5f7f036f4a4747f1836fffe6f2=1699792840',
         # 'Range': 'bytes=0-',
         # 'Referer': 'https://hifini.com/thread-84250.htm',
+        # 'Sec-Fetch-Dest': 'audio',
+        # 'Sec-Fetch-Mode': 'no-cors',
+        # 'Sec-Fetch-Site': 'same-origin',
+        # 'User-Agent': 'Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/119.0.0.0 Safari/537.36',
         'Accept': 'text/html,application/xhtml+xml,application/xml;q=0.9,image/webp,image/apng,*/*;q=0.8,application/signed-exchange;v=b3;q=0.7',
         'Accept-Encoding': 'gzip, deflate, br',
         'Accept-Language': 'zh-CN,zh;q=0.9,en;q=0.8,en-GB;q=0.7,en-US;q=0.6',
         'Sec-Ch-Ua': '"Google Chrome";v="119", "Chromium";v="119", "Not?A_Brand";v="24"',
         'Sec-Ch-Ua-Mobile': '?0',
         'Sec-Ch-Ua-Platform': '"Windows"',
-        # 'Sec-Fetch-Dest': 'audio',
-        # 'Sec-Fetch-Mode': 'no-cors',
-        # 'Sec-Fetch-Site': 'same-origin',
         'Sec-Fetch-Dest': 'document',
         'Sec-Fetch-Mode': 'navigate',
         'Sec-Fetch-Site': 'none',
         'Sec-Fetch-User': '?1',
         'Upgrade-Insecure-Requests': '1',
         'User-Agent': 'Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/119.0.0.0 Safari/537.36 Edg/119.0.0.0',
-        # 'User-Agent': 'Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/119.0.0.0 Safari/537.36',
+    }, extensions={
+        'http_version': 'HTTP/2',
     })
-    print(r.headers)
+    # r = await client.get(url)
+    print(r.extensions['http_version'])
+    print(r.headers.raw)
+    for h in r.request.headers.raw:
+        print(h)
     if r.status_code == 302:
         print(r.headers['Location'])
         print(r.text)
@@ -56,7 +80,7 @@ async def download_music(url, path):
 
 async def main():
     n = '84250'
-    r = httpx.get(f'https://hifini.com/thread-{n}.htm')
+    r = await client.get(f'/thread-{n}.htm')
     if r.status_code >= 200 and r.status_code <= 299:
         soup = BeautifulSoup(r.text, features='html.parser')
         scripts = soup.find_all('script')
@@ -68,7 +92,8 @@ async def main():
                 am = AUTHOR_PATTERN.findall(script.text)
                 author = am[0] if len(am) > 0 else n
                 k = m[0]
-                u = f"https://hifini.com/get_music.php?key={k}"
+                # u = f"https://hifini.com/get_music.php?key={k}"
+                u = f"/get_music.php?key={k}"
                 print(f'pick: {title} @ {author} | {u}')
                 await download_music(u, f"{title}-{author}.m4a")
     print('main end')
