@@ -1,5 +1,19 @@
 # trial python
 
+## hf 国内镜像
+
+```bash
+export HF_ENDPOINT=https://hf-mirror.com
+```
+
+```bat
+set HF_ENDPOINT=https://hf-mirror.com
+```
+
+```powershell
+$env:HF_ENDPOINT='https://hf-mirror.com'
+```
+
 ## pip
 
 ```bash
