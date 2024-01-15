@@ -1,3 +1,41 @@
+# txtai 示例
+
+## 库
+
+```bash
+# 全部
+pip install txtai[all]
+
+# WEB API 服务器
+pip install txtai[api]
+
+# 
+pip install txtai[cloud]
+
+# 
+pip install txtai[console]
+
+# 
+pip install txtai[database]
+
+#
+pip install txtai[graph]
+
+#
+pip install txtai[model]
+
+#
+pip install txtai[pipeline]
+
+#
+pip install txtai[similarity]
+
+#
+pip install txtai[workflow]
+
+# 可以组合
+pip install txtai[pipeline,workflow]
+```
 
 ## 使用国内 HF 镜像源
 
