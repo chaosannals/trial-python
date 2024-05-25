@@ -2,9 +2,18 @@
 # Python   ReportLab  https://docs.reportlab.com/
 import math
 import re
+import os
 from reportlab.pdfgen.canvas import Canvas
 from reportlab.lib.pagesizes import A4
-from reportlab import rl_settings
+from reportlab.pdfbase import pdfmetrics
+from reportlab.pdfbase.ttfonts import TTFont
+
+SELF_DIR = os.path.dirname(__file__)
+TTF_NAME = 'SourceCn'
+
+font_path = os.path.join(SELF_DIR, 'source-han-serif-cn-light.ttf')
+pdfmetrics.registerFont(TTFont(TTF_NAME, font_path))
+
 # c = Canvas("hello.pdf")
 
 font_size = 14
@@ -22,8 +31,8 @@ c = Canvas(
 # c.drawString(100,100,"Hello World")
 pos = 0
 for i in range(100):
-    c.setFontSize(font_size)
-    line = "Hello World" * 10
+    c.setFont(TTF_NAME, font_size)
+    line = "Hello World 中文" * 10
     sw = c.stringWidth(line, fontSize=font_size)
 
     if sw > page_size[0]:
