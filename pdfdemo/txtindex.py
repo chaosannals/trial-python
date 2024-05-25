@@ -18,7 +18,7 @@ for txt_path in txt_paths:
         lines = reader.readlines()
         print(f'总计: {len(lines)} 行')
         for i, line in enumerate(lines):
-            m = re.match(r'第.+[章卷节]', line)
+            m = re.match(r'第.+[章卷节][： :]', line)
             if m is not None:
                 chapter = f'[第 {i:6} 行] {line}'
                 print(chapter)
