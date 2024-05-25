@@ -29,11 +29,19 @@ c = Canvas(
     encrypt=None,
 )
 # c.drawString(100,100,"Hello World")
+
 pos = 0
 for i in range(100):
     c.setFont(TTF_NAME, font_size)
     line = "Hello World 中文" * 10
     sw = c.stringWidth(line, fontSize=font_size)
+
+    if (i % 10) == 0:
+        print(f'bookmark page {i}')
+        bm = f"bookmark {i}"
+        c.bookmarkPage(bm)
+        # c.linkAbsolute(f'link xxxxxx {i}', bm) # 这个不知道是啥。
+        c.addOutlineEntry(f'outline {i}', bm, 0, 0)
 
     if sw > page_size[0]:
         ll = len(line) 
