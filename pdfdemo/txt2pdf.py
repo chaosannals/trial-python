@@ -4,13 +4,20 @@ import os
 from glob import glob
 from reportlab.pdfgen.canvas import Canvas
 from reportlab.lib.pagesizes import A4
+from reportlab.pdfbase import pdfmetrics
+from reportlab.pdfbase.ttfonts import TTFont
 
+SELF_DIR = os.path.dirname(__file__)
+FONT_PATH = os.path.join(SELF_DIR, 'source-han-serif-cn-light.ttf')
 FONT_SIZE = 14
+FONT_NAME = 'SourceCn'
 TITLE_SIZE = 16
-POS_INIT = 10
+POS_INIT = 20
 PAGE_SIZE = A4
 PAGE_WIDTH = PAGE_SIZE[0]
 PAGE_HEIGHT = PAGE_SIZE[1]
+
+pdfmetrics.registerFont(TTFont(FONT_NAME, FONT_PATH))
 
 def list_txt_paths():
     txt_paths = glob('*.txt')
@@ -35,20 +42,22 @@ class PdfMaker:
             encrypt=None,
         )
         self.pos = POS_INIT
+        self.page_count = 0
 
     def pos_add(self, v):
         self.pos += v
         if self.pos > PAGE_HEIGHT:
-            print('new page')
+            self.page_count += 1
+            print(f'新页 {self.page_count}')
             self.canvas.showPage()
             self.pos = POS_INIT
+        self.canvas.setFont(FONT_NAME, v)
     
     def save(self):
         self.canvas.save()
     
     def draw_line(self, txt_line):
         if is_title(txt_line):
-            self.canvas.setFontSize(TITLE_SIZE)
             self.pos_add(TITLE_SIZE)
             self.canvas.drawString(10, self.pos, txt_line)
             return
@@ -59,7 +68,7 @@ class PdfMaker:
             txt_len = len(txt_line)
             txt_scale = sw / PAGE_WIDTH
             row_len = math.floor(txt_len / txt_scale) - 4
-            print(txt_line)
+            # print(txt_line)
             rows = re.findall(f'.{{1,{row_len}}}', txt_line)
             for row in rows:
                 self.pos_add(FONT_SIZE)
